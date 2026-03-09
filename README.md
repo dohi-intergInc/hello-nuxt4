@@ -52,5 +52,3 @@ hello-nuxt4/
 - **自動インポート**: `ref`, `computed` 等の Vue API や `components/` 配下のコンポーネントが自動インポート
 - **ファイルベースルーティング**: `pages/` 配下のファイルが自動的にルートになる
 - **サーバーエンジン (Nitro)**: `server/` ディレクトリで API ルートを定義可能
-# hello-nuxt4
-# hello-nuxt4
