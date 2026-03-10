@@ -2,9 +2,6 @@
   "name": "Nuxt 4 Dev",
   "image": "mcr.microsoft.com/devcontainers/typescript-node:22",
   "forwardPorts": [3000],
-  "mounts": [
-    "source=${localEnv:HOME}/.ssh/config,target=/home/node/.ssh/config,type=bind,readonly"
-  ],
   "postCreateCommand": "npm install",
   "customizations": {
     "vscode": {
