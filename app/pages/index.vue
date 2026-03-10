@@ -1,10 +1,9 @@
 <template>
   <div class="page-home">
-    <h1>Hello Nuxt 4! 🚀</h1>
+    <h1>サイトギャラリー</h1>
     <p class="lead">Nuxt 4 プロジェクトへようこそ</p>
-    <AppCounter />
     <nav>
-      <NuxtLink to="/blogs">ブログを見る →</NuxtLink>
+      <NuxtLink to="/blogs">このサイトについて</NuxtLink>
       <NuxtLink to="/about">About ページへ →</NuxtLink>
     </nav>
   </div>
