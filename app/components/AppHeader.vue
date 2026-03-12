@@ -8,9 +8,9 @@
         <span class="bar" :class="{ open: isOpen }" />
       </button>
       <nav class="nav" :class="{ open: isOpen }">
-        <NuxtLink to="/" @click="isOpen = false">Home</NuxtLink>
-        <NuxtLink to="/blogs" @click="isOpen = false">Blog</NuxtLink>
-        <NuxtLink to="/about" @click="isOpen = false">About</NuxtLink>
+        <NuxtLink to="/" @click="isOpen = false">ホーム</NuxtLink>
+        <NuxtLink to="/about" @click="isOpen = false">このサイトについて</NuxtLink>
+        <NuxtLink to="/blogs" @click="isOpen = false">ブログ</NuxtLink>
       </nav>
     </div>
   </header>
