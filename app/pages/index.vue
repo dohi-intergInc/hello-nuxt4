@@ -1,10 +1,15 @@
 <script setup lang="ts">
 import type { MicroCMSListResponse } from 'microcms-js-sdk'
 import type { Site } from '~~/shared/types/microcms'
+// import AppSearchBtn from './components/AppSearchBtn.vue'
+// import AppCard from './components/AppCard.vue'
 
 const { data, error, status } = await useFetch<MicroCMSListResponse<Site>>('/api/sites')
 </script>
 <template>
+  <!-- <div>
+    <AppSearchBtn />
+  </div> -->
   <div>
     <div v-if="status === 'pending'">読み込み中...</div>
     <div v-else-if="error" class="error">
@@ -12,20 +17,32 @@ const { data, error, status } = await useFetch<MicroCMSListResponse<Site>>('/api
       <pre>{{ error.message }}</pre>
     </div>
     <template v-else-if="data">
-      <AppCard
-        v-for="site in data.contents"
-        :key="site.id"
-        :image-url="site.image.url"
-        :title="site.title"
-        :date="site.date"
-        :url="site.url"
-      />
+      <div class="card-section">
+        <AppCard
+          v-for="site in data.contents"
+          :key="site.id"
+          :image-url="site.image.url"
+          :title="site.title"
+          :date="site.date"
+          :url="site.url"
+        />
+      </div>
       <p v-if="data.contents.length === 0">記事がありません</p>
     </template>
   </div>
 </template>
 
 <style scoped>
+.card-section {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+@media (max-width: 768px) {
+  .card-section {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
 /* .page-home {
   text-align: center;
   padding: 2rem 0;
