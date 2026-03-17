@@ -1,8 +1,148 @@
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const filterOptions = ref([
+  { id: 'service', label: 'サービス' },
+  { id: 'promotion', label: 'プロモーション' },
+])
+
+const selectedTypes = ref<string[]>([])
+
+const clearFilters = () => {
+  selectedTypes.value = []
+}
+
+const handleSubmit = () => {
+  console.log(selectedTypes.value)
+}
+</script>
 <template>
-  <ul>
-    <li>タイプ</li>
-    <li>カテゴリ</li>
-    <li>カラー</li>
-  </ul>
+  <div class="modal-overlay">
+    <div class="modal-container">
+      <header class="modal-header">
+        <button class="tab-btn">タイプ</button>
+        <button class="tab-btn">カテゴリ</button>
+        <button class="tab-btn">カラー</button>
+      </header>
+      <main class="modal-body">
+        <div class="options-grid">
+          <label v-for="option in filterOptions" :key="option.id" class="option-card">
+            <input v-model="selectedTypes" type="checkbox" :value="option.label" />
+            <span>{{ option.label }}</span>
+          </label>
+        </div>
+      </main>
+      <footer class="modal-footer">
+        <div class="selected-info">
+          <p>選択中の条件:{{ selectedTypes }}</p>
+          <div class="action-buttons">
+            <button class="btn-clear" @click="clearFilters">絞り込み条件をクリア</button>
+            <button class="btn-submit" @click="handleSubmit">絞り込む</button>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </div>
 </template>
-<style></style>
+<style scoped>
+.modal-overlay {
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+}
+.modal-container {
+  background-color: #fff;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 800px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+.modal-header {
+  display: flex;
+  justify-content: space-around;
+  padding: 16px;
+  border-bottom: 1px solid #eee;
+}
+.tab-btn {
+  border: none;
+  background: none;
+  font-weight: bold;
+  padding: 12px 32px;
+  border-radius: 24px;
+  cursor: pointer;
+}
+/* .tab-btn.active {
+  background-color: #000;
+  color: #fff;
+} */
+.modal-body {
+  padding: 32px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+.options-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.option-card {
+  display: flex;
+  align-items: center;
+  background-color: #f5f5f5;
+  padding: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: 2px solid transparent;
+}
+.option-card:hover {
+  background-color: #eee;
+}
+/* .hidden-checkbox {
+  display: none;
+} */
+/* .custom-checkbox {
+  width: 20px;
+  height: 20px;
+  background-color: #ddd;
+  border-radius: 4px;
+  margin-right: 12px;
+  display: inline-block;
+} */
+.modal-footer {
+  border-top: 1px solid #eee;
+}
+.selected-info {
+  padding: 16px 32px;
+  border-bottom: 1px solid #eee;
+  font-weight: bold;
+}
+.action-buttons {
+  display: flex;
+  gap: 16px;
+  padding: 24px 32px;
+  background-color: #fafafa;
+}
+.btn-clear,
+.btn-submit {
+  flex: 1;
+  padding: 16px;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+  border: none;
+}
+.btn-clear {
+  background-color: #e0e0e0;
+  color: #333;
+}
+.btn-submit {
+  background-color: #3aaf2f;
+  color: white;
+}
+</style>

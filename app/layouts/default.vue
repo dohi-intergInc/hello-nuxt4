@@ -2,7 +2,6 @@
   <div class="layout">
     <AppHeader />
     <main class="main">
-      <AppSearch />
       <slot />
     </main>
     <AppFooter />

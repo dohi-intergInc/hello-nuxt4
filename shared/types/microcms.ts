@@ -12,6 +12,7 @@ export interface Blog extends MicroCMSListContent {
 export interface Site extends MicroCMSListContent {
   image: MicroCMSImage
   title: string
+  category: string
   date: number
   url: string
 }

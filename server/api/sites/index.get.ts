@@ -8,6 +8,7 @@ export default defineEventHandler(async (event) => {
     endpoint: 'sites',
     queries: {
       limit: Number(query.limit) || 10,
+      filters: 'category[contains]サービス',
       offset: Number(query.offset) || 0,
     },
   })
