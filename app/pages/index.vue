@@ -1,16 +1,38 @@
 <script setup lang="ts">
 import type { MicroCMSListResponse } from 'microcms-js-sdk'
 import type { Site } from '~~/shared/types/microcms'
-// import AppSearchBtn from './components/AppSearchBtn.vue'
-// import AppCard from './components/AppCard.vue'
 
 const { data, error, status } = await useFetch<MicroCMSListResponse<Site>>('/api/sites')
+
+const isOpenModal = ref(false)
+const openModal = () => {
+  isOpenModal.value = true
+}
+const closeModal = () => {
+  isOpenModal.value = false
+}
+
+const filterTags = ref<string[]>([])
+
+const handleList = (selectedTypes: string[]) => {
+  filterTags.value = selectedTypes
+  closeModal()
+}
+
+const filteredList = computed<Site[]>(() => {
+  if (!data.value) {
+    return []
+  } else if (filterTags.value.length === 0) {
+    return data.value.contents
+  } else {
+    return data.value.contents.filter((a) => filterTags.value.some((b) => a.category.includes(b)))
+  }
+})
 </script>
 <template>
-  <!-- <div>
-    <AppSearchBtn />
-  </div> -->
   <div>
+    <AppSearchBtn @open="openModal" />
+    <AppSearch v-if="isOpenModal === true" @getlist="handleList" />
     <div v-if="status === 'pending'">読み込み中...</div>
     <div v-else-if="error" class="error">
       <p>データの取得に失敗しました</p>
@@ -19,7 +41,7 @@ const { data, error, status } = await useFetch<MicroCMSListResponse<Site>>('/api
     <template v-else-if="data">
       <div class="card-section">
         <AppCard
-          v-for="site in data.contents"
+          v-for="site in filteredList"
           :key="site.id"
           :image-url="site.image.url"
           :title="site.title"
@@ -27,7 +49,7 @@ const { data, error, status } = await useFetch<MicroCMSListResponse<Site>>('/api
           :url="site.url"
         />
       </div>
-      <p v-if="data.contents.length === 0">記事がありません</p>
+      <p v-if="filteredList.length === 0">記事がありません</p>
     </template>
   </div>
 </template>
