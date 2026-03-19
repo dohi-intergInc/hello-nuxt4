@@ -12,18 +12,19 @@ const clearFilters = () => {
   selectedTypes.value = []
 }
 
-const handleSubmit = () => {
-  console.log(selectedTypes.value)
+interface Emits {
+  (event: 'getlist', selectedTypes: string[]): void
+}
+
+const emits = defineEmits<Emits>()
+
+const isGetList = () => {
+  emits('getlist', selectedTypes.value)
 }
 </script>
 <template>
-  <div class="modal-overlay">
+  <div>
     <div class="modal-container">
-      <header class="modal-header">
-        <button class="tab-btn">タイプ</button>
-        <button class="tab-btn">カテゴリ</button>
-        <button class="tab-btn">カラー</button>
-      </header>
       <main class="modal-body">
         <div class="options-grid">
           <label v-for="option in filterOptions" :key="option.id" class="option-card">
@@ -37,7 +38,7 @@ const handleSubmit = () => {
           <p>選択中の条件:{{ selectedTypes }}</p>
           <div class="action-buttons">
             <button class="btn-clear" @click="clearFilters">絞り込み条件をクリア</button>
-            <button class="btn-submit" @click="handleSubmit">絞り込む</button>
+            <button class="btn-submit" @click="isGetList">絞り込む</button>
           </div>
         </div>
       </footer>
@@ -45,14 +46,6 @@ const handleSubmit = () => {
   </div>
 </template>
 <style scoped>
-.modal-overlay {
-  background-color: rgba(0, 0, 0, 0.5);
-  padding: 40px;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  min-height: 100vh;
-}
 .modal-container {
   background-color: #fff;
   border-radius: 16px;
