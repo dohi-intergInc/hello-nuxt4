@@ -5,8 +5,10 @@ import type { Site } from '~~/shared/types/microcms'
 const { data, error, status } = await useFetch<MicroCMSListResponse<Site>>('/api/sites')
 
 const isOpenModal = ref(false)
-const openModal = () => {
+const targetTab = ref()
+const openModal = (tabName: string) => {
   isOpenModal.value = true
+  targetTab.value = tabName
 }
 const closeModal = () => {
   isOpenModal.value = false
@@ -32,7 +34,7 @@ const filteredList = computed<Site[]>(() => {
 <template>
   <div>
     <AppSearchBtn @open="openModal" />
-    <AppSearch v-if="isOpenModal === true" @getlist="handleList" />
+    <AppSearch v-if="isOpenModal === true" :current-tab="targetTab" @getlist="handleList" />
     <div v-if="status === 'pending'">読み込み中...</div>
     <div v-else-if="error" class="error">
       <p>データの取得に失敗しました</p>

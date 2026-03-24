@@ -1,7 +1,7 @@
 <template>
   <header class="header">
     <div class="header-inner">
-      <NuxtLink to="/" class="logo">Hello Nuxt 4</NuxtLink>
+      <NuxtLink to="/" class="logo">GOOD Design Gallery</NuxtLink>
       <button class="menu-toggle" aria-label="メニュー" @click="isOpen = !isOpen">
         <span class="bar" :class="{ open: isOpen }" />
         <span class="bar" :class="{ open: isOpen }" />
@@ -42,7 +42,7 @@ const isOpen = ref(false)
 .logo {
   font-size: 1.25rem;
   font-weight: bold;
-  color: #00dc82;
+  color: #00acac;
   text-decoration: none;
 }
 
@@ -60,7 +60,7 @@ const isOpen = ref(false)
 
 .nav a:hover,
 .nav a.router-link-active {
-  color: #00dc82;
+  color: #00acac;
 }
 
 .menu-toggle {

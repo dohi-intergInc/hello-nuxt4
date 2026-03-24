@@ -1,20 +1,20 @@
 <script setup lang="ts">
 interface Emits {
-  (event: 'open'): void
+  (event: 'open', tabName: string): void
 }
 const emits = defineEmits<Emits>()
 
-const handleOpen = () => {
-  emits('open')
+const handleOpen = (tabName: string) => {
+  emits('open', tabName)
 }
 </script>
 <template>
   <div>
     <div class="modal-container">
       <header class="modal-header">
-        <button class="tab-btn" @click="handleOpen">タイプ</button>
-        <button class="tab-btn">カテゴリ</button>
-        <button class="tab-btn">カラー</button>
+        <button class="tab-btn" @click="() => handleOpen('type')">タイプ</button>
+        <button class="tab-btn" @click="() => handleOpen('category')">カテゴリ</button>
+        <button class="tab-btn" @click="() => handleOpen('color')">カラー</button>
       </header>
     </div>
   </div>
@@ -24,7 +24,7 @@ const handleOpen = () => {
   background-color: #fff;
   border-radius: 16px;
   width: 100%;
-  max-width: 800px;
+  max-width: 928px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
   overflow: hidden;
 }
