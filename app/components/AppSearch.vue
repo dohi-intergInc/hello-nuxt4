@@ -4,7 +4,32 @@ import { ref } from 'vue'
 const filterOptions = ref([
   { id: 'service', label: 'サービス' },
   { id: 'promotion', label: 'プロモーション' },
+  { id: 'lp', label: 'LP' },
+  { id: 'recruitment', label: '採用' },
+  { id: 'portfolio', label: 'ポートフォリオ' },
+  { id: 'branding', label: 'ブランディング' },
+  { id: 'corporate', label: 'コーポレート' },
+  { id: 'media-portal', label: 'メディア・ポータル' },
+  { id: 'ec', label: 'EC' },
 ])
+
+const categoryOptions = ref([
+  { id: 'localgovernment', label: '自治体' },
+  { id: 'food', label: '食品' },
+  { id: 'fashion', label: 'ファッション' },
+])
+
+const colorOptions = ref([
+  { id: 'black', label: 'ブラック' },
+  { id: 'white', label: 'ホワイト' },
+  { id: 'gray', label: 'グレー' },
+])
+
+interface Props {
+  currentTab: string
+}
+
+defineProps<Props>()
 
 const selectedTypes = ref<string[]>([])
 
@@ -26,8 +51,20 @@ const isGetList = () => {
   <div>
     <div class="modal-container">
       <main class="modal-body">
-        <div class="options-grid">
+        <div v-if="currentTab === 'type'" class="options-grid">
           <label v-for="option in filterOptions" :key="option.id" class="option-card">
+            <input v-model="selectedTypes" type="checkbox" :value="option.label" />
+            <span>{{ option.label }}</span>
+          </label>
+        </div>
+        <div v-if="currentTab === 'category'" class="options-grid">
+          <label v-for="option in categoryOptions" :key="option.id" class="option-card">
+            <input v-model="selectedTypes" type="checkbox" :value="option.label" />
+            <span>{{ option.label }}</span>
+          </label>
+        </div>
+        <div v-if="currentTab === 'color'" class="options-grid">
+          <label v-for="option in colorOptions" :key="option.id" class="option-card">
             <input v-model="selectedTypes" type="checkbox" :value="option.label" />
             <span>{{ option.label }}</span>
           </label>
@@ -50,7 +87,7 @@ const isGetList = () => {
   background-color: #fff;
   border-radius: 16px;
   width: 100%;
-  max-width: 800px;
+  max-width: 928px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
   overflow: hidden;
 }
