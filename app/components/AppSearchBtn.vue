@@ -25,8 +25,9 @@ const handleOpen = (tabName: string) => {
   border-radius: 16px;
   width: 100%;
   max-width: 928px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 16px rgba(0, 0, 0, 0.1);
   overflow: hidden;
+  margin-bottom: 32px;
 }
 .modal-header {
   display: flex;

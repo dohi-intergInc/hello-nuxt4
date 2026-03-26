@@ -9,7 +9,7 @@
       </button>
       <nav class="nav" :class="{ open: isOpen }">
         <NuxtLink to="/" @click="isOpen = false">ホーム</NuxtLink>
-        <NuxtLink to="/about" @click="isOpen = false">このサイトについて</NuxtLink>
+        <!-- <NuxtLink to="/about" @click="isOpen = false">このサイトについて</NuxtLink> -->
         <NuxtLink to="/blogs" @click="isOpen = false">ブログ</NuxtLink>
       </nav>
     </div>

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-const filterOptions = ref([
+const typeOptions = ref([
   { id: 'service', label: 'サービス' },
   { id: 'promotion', label: 'プロモーション' },
   { id: 'lp', label: 'LP' },
@@ -32,19 +32,28 @@ interface Props {
 defineProps<Props>()
 
 const selectedTypes = ref<string[]>([])
+const selectedCategory = ref<string[]>([])
+const selectedColor = ref<string[]>([])
 
 const clearFilters = () => {
   selectedTypes.value = []
+  selectedCategory.value = []
+  selectedColor.value = []
 }
 
 interface Emits {
-  (event: 'getlist', selectedTypes: string[]): void
+  (
+    event: 'getlist',
+    selectedTypes: string[],
+    selectedCategory: string[],
+    selectedColor: string[],
+  ): void
 }
 
 const emits = defineEmits<Emits>()
 
 const isGetList = () => {
-  emits('getlist', selectedTypes.value)
+  emits('getlist', selectedTypes.value, selectedCategory.value, selectedColor.value)
 }
 </script>
 <template>
@@ -52,20 +61,20 @@ const isGetList = () => {
     <div class="modal-container">
       <main class="modal-body">
         <div v-if="currentTab === 'type'" class="options-grid">
-          <label v-for="option in filterOptions" :key="option.id" class="option-card">
+          <label v-for="option in typeOptions" :key="option.id" class="option-card">
             <input v-model="selectedTypes" type="checkbox" :value="option.label" />
             <span>{{ option.label }}</span>
           </label>
         </div>
         <div v-if="currentTab === 'category'" class="options-grid">
           <label v-for="option in categoryOptions" :key="option.id" class="option-card">
-            <input v-model="selectedTypes" type="checkbox" :value="option.label" />
+            <input v-model="selectedCategory" type="checkbox" :value="option.label" />
             <span>{{ option.label }}</span>
           </label>
         </div>
         <div v-if="currentTab === 'color'" class="options-grid">
           <label v-for="option in colorOptions" :key="option.id" class="option-card">
-            <input v-model="selectedTypes" type="checkbox" :value="option.label" />
+            <input v-model="selectedColor" type="checkbox" :value="option.label" />
             <span>{{ option.label }}</span>
           </label>
         </div>
@@ -90,6 +99,7 @@ const isGetList = () => {
   max-width: 928px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
   overflow: hidden;
+  margin-top: -32px;
 }
 .modal-header {
   display: flex;

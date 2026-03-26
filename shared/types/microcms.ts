@@ -13,6 +13,8 @@ export interface Site extends MicroCMSListContent {
   image: MicroCMSImage
   title: string
   category: string[]
+  type: string[]
+  color: string[]
   date: number
   url: string
 }
