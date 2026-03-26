@@ -10,11 +10,14 @@ const props = defineProps<Props>()
 </script>
 <template>
   <div class="card">
-    <img :src="props.imageUrl" alt="" class="card-img" />
-    <a :href="props.url" target="_blank" class="card-title">{{ props.title }}</a>
+    <a :href="props.url" target="_blank" class="card-img">
+      <img :src="props.imageUrl" alt="" class="card-img" />
+    </a>
+    <p class="card-title">{{ props.title }}</p>
     <p class="card-date">{{ props.date }}</p>
   </div>
 </template>
+
 <style scoped>
 .card {
   display: flex;

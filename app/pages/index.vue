@@ -14,25 +14,54 @@ const closeModal = () => {
   isOpenModal.value = false
 }
 
-const filterTags = ref<string[]>([])
+const filterTypes = ref<string[]>([])
+const filterCategories = ref<string[]>([])
+const filterColors = ref<string[]>([])
 
-const handleList = (selectedTypes: string[]) => {
-  filterTags.value = selectedTypes
+const handleList = (
+  selectedTypes: string[],
+  selectedCategory: string[],
+  selectedColors: string[],
+) => {
+  filterTypes.value = selectedTypes
+  filterCategories.value = selectedCategory
+  filterColors.value = selectedColors
   closeModal()
 }
 
 const filteredList = computed<Site[]>(() => {
   if (!data.value) {
     return []
-  } else if (filterTags.value.length === 0) {
+  } else if (
+    filterTypes.value.length === 0 &&
+    filterCategories.value.length === 0 &&
+    filterColors.value.length === 0
+  ) {
     return data.value.contents
   } else {
-    return data.value.contents.filter((a) => filterTags.value.some((b) => a.category.includes(b)))
+    // 3要素でフィルタリングする
+    // 1. タイプ && カテゴリ && カラーとフィルター要素間の中ではAND検索
+    // 2. 各フィルター要素の中ではOR検索
+    return data.value.contents.filter((site) => {
+      const matchType =
+        filterTypes.value.length === 0 || filterTypes.value.some((type) => site.type.includes(type))
+      const matchCategories =
+        filterCategories.value.length === 0 ||
+        filterCategories.value.some((category) => site.category.includes(category))
+      const matchColors =
+        filterColors.value.length === 0 ||
+        filterColors.value.some((color) => {
+          console.log(color, site.color, site.color.includes(color))
+          return site.color.includes(color)
+        })
+
+      return matchType && matchCategories && matchColors
+    })
   }
 })
 </script>
 <template>
-  <div>
+  <div class="main">
     <AppSearchBtn @open="openModal" />
     <AppSearch v-if="isOpenModal === true" :current-tab="targetTab" @getlist="handleList" />
     <div v-if="status === 'pending'">読み込み中...</div>
